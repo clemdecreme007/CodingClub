@@ -5,4 +5,4 @@ invert (Empty) = Empty
 invert (Node x l r) = Node x (invert r) (invert l)
 
 main = do
-  print "incredible"
+  print "follow: clem.de.le.creme on instagram"
