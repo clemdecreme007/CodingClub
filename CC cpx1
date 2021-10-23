@@ -1,0 +1,90 @@
+function checkGuess (guess: number) {
+    if (guess == SEQUENCE[sequenceIndex]) {
+        console.log("Correct")
+        if (SEQUENCE.length == sequenceIndex + 1) {
+            light.showRing(
+            `green green green green green green green green green green`
+            )
+            if (list.length == 10) {
+                light.showRing(
+                `green green green green green green green green green green`
+                )
+                console.log("You won!")
+                music.jumpUp.play()
+            }
+            control.waitMicros(1000000)
+            addValue()
+            showAll()
+        } else {
+            sequenceIndex += 1
+        }
+    } else {
+        console.log("Wrong")
+        light.showRing(
+        "red red red red red red red red red red"
+        )
+        music.wawawawaa.play()
+        list = []
+    }
+}
+function showValue (num: number) {
+    if (num == 1) {
+        light.showRing(
+        `black black black black black blue blue black black black`
+        )
+        music.baDing.play()
+    }
+    if (num == 2) {
+        light.showRing(
+        `black black black black black black black black red red`
+        )
+        music.baDing.play()
+    }
+    if (num == 3) {
+        light.showRing(
+        `green green black black black black black black black black`
+        )
+        music.baDing.play()
+    }
+    if (num == 4) {
+        light.showRing(
+        `black black black pink pink black black black black black`
+        )
+        music.baDing.play()
+    }
+}
+function addValue () {
+    SEQUENCE.push(Math.randomRange(1, 4))
+    console.log(SEQUENCE)
+}
+input.pinA1.onEvent(ButtonEvent.Down, function () {
+    showValue(1)
+    checkGuess(1)
+})
+input.pinA4.onEvent(ButtonEvent.Down, function () {
+    showValue(3)
+    checkGuess(3)
+})
+input.pinA3.onEvent(ButtonEvent.Down, function () {
+    showValue(2)
+    checkGuess(2)
+})
+input.pinA7.onEvent(ButtonEvent.Down, function () {
+    showValue(4)
+    checkGuess(4)
+})
+function showAll () {
+    for (let value of SEQUENCE) {
+        showValue(value)
+        control.waitMicros(700000)
+    }
+    sequenceIndex = 0
+}
+let list: number[] = []
+let sequenceIndex = 0
+let SEQUENCE: number[] = []
+SEQUENCE = []
+for (let i = 0; i < 4; i++) {
+    addValue()
+}
+showAll()
